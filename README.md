@@ -11,7 +11,7 @@
 
 ## Как развернуть проект на локальной машине.
 ```
-1 ] (Клонируем проект) :git clone git@github.com:OsKaLis/api_final_yatube.git
+1 ] (Клонируем проект) :`git clone git@github.com:OsKaLis/api_final_yatube.git`
 2 ] (водим пароль если доступ приватный)
 3 ] (Переходим в директорию проекта) :cd api_final_yatube/
 4 ] (Устанавливаем изарированое окружение) :python -m venv venv 
