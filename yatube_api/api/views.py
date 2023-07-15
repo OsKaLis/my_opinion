@@ -1,9 +1,8 @@
 from rest_framework import viewsets, mixins, filters
 from rest_framework.pagination import LimitOffsetPagination
-from rest_framework.exceptions import MethodNotAllowed
 from django.shortcuts import get_object_or_404
 
-from posts.models import Post, Group, Follow
+from posts.models import Post, Group, User
 from .serializers import (
     PostSerializer,
     CommentSerializer,
@@ -11,30 +10,25 @@ from .serializers import (
     FollowSerializer
 )
 from .permissions import (
-    OwnerOrReadOnly,
-    ReadOnly,
-    AuthenticationOnly
+    AuthenticationOnly,
+    GroupReadOnly,
+    AuthenticatedOrReadOnly
 )
 
 
 class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
-    permission_classes = (OwnerOrReadOnly,)
+    permission_classes = (AuthenticatedOrReadOnly,)
     pagination_class = LimitOffsetPagination
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
 
-    def get_permissions(self):
-        if self.action == 'retrieve':
-            return (ReadOnly(),)
-        return super().get_permissions()
-
 
 class CommentViewSet(viewsets.ModelViewSet):
     serializer_class = CommentSerializer
-    permission_classes = (OwnerOrReadOnly,)
+    permission_classes = (AuthenticatedOrReadOnly,)
 
     def get_queryset(self):
         post = get_object_or_404(Post, pk=self.kwargs.get('post_id'))
@@ -44,22 +38,11 @@ class CommentViewSet(viewsets.ModelViewSet):
         post = get_object_or_404(Post, pk=self.kwargs.get('post_id'))
         serializer.save(author=self.request.user, post=post)
 
-    def get_permissions(self):
-        if self.action == 'retrieve':
-            return (ReadOnly(),)
-        return super().get_permissions()
-
 
 class GroupViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
-    permission_classes = (ReadOnly,)
-
-    def get_permissions(self):
-        print(self.action)
-        if self.request.method == 'POST':
-            raise MethodNotAllowed('')
-        return super().get_permissions()
+    permission_classes = (GroupReadOnly,)
 
 
 class FollowViewSet(
@@ -76,5 +59,5 @@ class FollowViewSet(
         serializer.save(user=self.request.user)
 
     def get_queryset(self):
-        follow = Follow.objects.filter(user=self.request.user)
-        return follow
+        user = get_object_or_404(User, username=self.request.user)
+        return user.subscriber.all()

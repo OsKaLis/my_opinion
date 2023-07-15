@@ -9,8 +9,8 @@ from .views import (
 )
 
 router = DefaultRouter()
-router.register('posts', PostViewSet)
-router.register('groups', GroupViewSet)
+router.register('posts', PostViewSet, basename='Post')
+router.register('groups', GroupViewSet, basename='Group')
 router.register('follow', FollowViewSet, basename='Follow')
 router.register(
     r'posts/(?P<post_id>\d+)/comments',
@@ -21,6 +21,6 @@ router.register(
 app_name = 'api'
 
 urlpatterns = [
-    path('', include(router.urls)),
-    path('', include('djoser.urls.jwt')),
+    path('v1/', include(router.urls)),
+    path('v1/', include('djoser.urls.jwt')),
 ]
