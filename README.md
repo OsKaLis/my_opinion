@@ -24,7 +24,7 @@
 > * [11] (По всем запросам есть документация) :http://127.0.0.1:8000/redoc/#tag/api
 
 ## Cтек технологий:
-<img src="https://img.shields.io/badge/Python_-3.9.10-Green">  <img src="https://img.shields.io/badge/SQLite_-3.41.2-steelblue">  <img src="https://img.shields.io/badge/django_-3.2-Green">
+<img src="https://img.shields.io/badge/Python_-3.9.10-Green">  <img src="https://img.shields.io/badge/SQLite_-3.41.2-steelblue">  <img src="https://img.shields.io/badge/django_-3.2.16-Green">
 <img src="https://img.shields.io/badge/djangorestframework_-3.12.4-Green">
 
 ## Некоторые примеры запросов к my_opinion.
