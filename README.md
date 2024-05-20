@@ -28,6 +28,9 @@
 <img src="https://img.shields.io/badge/djangorestframework_-3.12.4-Green">
 
 ## Некоторые примеры запросов к my_opinion.
+
+Все эндпоинты можно ознакомится - [GET] http://127.0.0.1:8000/redoc/
+
 Запрос ковсем постам созданые на этом сервере, [GET] :http://127.0.0.1:8000/api/v1/posts/?limit=1&offset=0
 
 Создание новый пост авторизованным пользователем, [POST] :http://127.0.0.1:8000/api/v1/posts/
